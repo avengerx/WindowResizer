@@ -157,13 +157,13 @@ public static class WindowCmd
         return p;
     }
 
-    private static Config? LoadOrCreateConfig(string? configPath, string? profileName, Action<string>? onError)
+    private static ProfileConfig? LoadOrCreateConfig(string? configPath, string? profileName, Action<string>? onError)
     {
         if (!ConfigUtils.LoadOrCreate(configPath, profileName, onError))
         {
             return null;
         }
 
-        return ConfigFactory.Current;
+        return ProfilesFactory.Current;
     }
 }

@@ -36,13 +36,13 @@ namespace WindowResizer.Base
 
             try
             {
-                ConfigFactory.Load(configPath);
+                ProfilesFactory.Load(configPath);
             }
             catch (Exception ex)
             {
                 if (ex is System.IO.FileNotFoundException)
                 {
-                    var cnf = Config.NewConfig(profileName);
+                    var cnf = ProfileConfig.NewConfig(profileName);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace WindowResizer.Base
                 }
             }
 
-            ConfigFactory.ConfigPath = configPath;
+            ProfilesFactory.ConfigPath = configPath;
             return true;
         }
 
