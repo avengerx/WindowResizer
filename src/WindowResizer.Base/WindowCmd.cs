@@ -86,8 +86,6 @@ public static class WindowCmd
             return false;
         }
 
-        profile.WindowSizes.Clear();
-
         var windows = Resizer.GetOpenWindows();
         var targets = new List<TargetWindow>();
 
@@ -103,6 +101,9 @@ public static class WindowCmd
             targets.Add(new TargetWindow(handle, processName, t));
         }
 
+        ProfilesFactory.PostponeSaving = true;
+        profile.WindowSizes.Clear();
+
         foreach (var tp in targets)
         {
             UpdateOrSaveWindowSize(tp.Handle, profile, (p, e) =>
@@ -111,6 +112,9 @@ public static class WindowCmd
                 onError?.Invoke($"Unable to save position for process <{p}>, elevated privileges may be required.");
             });
         }
+
+        ProfilesFactory.PostponeSaving = false;
+        ProfilesFactory.Save();
 
         onDebug?.Invoke(targets);
 
